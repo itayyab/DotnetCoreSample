@@ -1,0 +1,86 @@
+<div class="container">
+  <div #toast class="toast" style="position: fixed; top: 50px; right: 20px;" data-delay="3000">
+    <div class="toast-header">
+      <strong class="mr-auto">Angular</strong>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      {{message}}
+    </div>
+  </div>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">People</h1>
+      <p class="lead">This is a sample people list.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
+
+      <button type="button" class="btn btn-outline-success float-right" (click)="open2()">Add User</button>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of heroes">
+        <th scope="row">{{ user.id || -1 }}</th>
+        <td (click)="open(user)">{{user.name}}</td>
+        <td (click)="open(user)">{{user.email}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" #exampleModal tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" #namefiled class="form-control" id="recipient-name" value="{{name}}">
+              <label for="recipient-email" class="col-form-label">Email:</label>
+              <input type="text" #emailfiled class="form-control" id="recipient-email" value="{{email}}">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button #delbtn type="button" class="btn btn-danger float-right" *ngIf="edit"
+                  (click)="delete({id: id, name: name,email:emailfiled.value})">
+            Delete
+          </button>
+          <button type="button" class="btn btn-outline-dark" *ngIf="edit"
+                  (click)="update({id: id, name: namefiled.value,email:emailfiled.value})">
+            Update
+          </button>
+          <button type="button" class="btn btn-outline-dark" *ngIf="!edit"
+                  (click)="addX(  namefiled.value,emailfiled.value)">
+            Save
+          </button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
