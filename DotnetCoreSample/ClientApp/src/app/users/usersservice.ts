@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -9,30 +9,43 @@ import { catchError } from 'rxjs/operators';
 
 import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
 import { User } from './User';
-import { getBaseUrl } from '../../main';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://localhost:44316',
-    'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-  })
-};
+ 
 
 @Injectable({
   providedIn: 'root'  // <- ADD THIS
 })
 export class UsersService {
-  heroesUrl = 'https://localhost:44316/api/users';  // URL to web api
+  heroesUrl = '';//'https://localhost:44333/api/users';  // URL to web api
   private handleError: HandleError;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'https://localhost:44333',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+    })
+  };
 
 
   constructor(
     private http: HttpClient,
-    httpErrorHandler: HttpErrorHandler) {
-    this.handleError = httpErrorHandler.createHandleError('PeopleService');
+    httpErrorHandler: HttpErrorHandler, @Inject('BASE_URL') baseUrl: string) {
+    this.handleError = httpErrorHandler.createHandleError('UsersService');
+    this.heroesUrl = baseUrl +'api/users';
+    console.log(baseUrl);
+    console.log(JSON.stringify(this.httpOptions));
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '" '+ this.heroesUrl + '"',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+      })
+    };
+    console.log(JSON.stringify(this.httpOptions));
   }
 
   /** GET heroes from the server */
@@ -45,7 +58,7 @@ export class UsersService {
 
   /** POST: add a new hero to the database */
   addHero(hero: User): Observable<User> {
-    return this.http.post<User>(this.heroesUrl, hero, httpOptions)
+    return this.http.post<User>(this.heroesUrl, hero, this.httpOptions)
       .pipe(
         catchError(this.handleError('addHero', hero))
       );
@@ -53,7 +66,7 @@ export class UsersService {
 
   /** POST: add a new hero to the server */
   addHeroX(hero: User): Observable<User> {
-    return this.http.post<User>(this.heroesUrl, hero, httpOptions)
+    return this.http.post<User>(this.heroesUrl, hero, this.httpOptions)
       .pipe(
         catchError(this.handleError('addHero', hero))
       );
@@ -65,7 +78,7 @@ export class UsersService {
     // httpOptions.headers =
     //   httpOptions.headers.set('Authorization', 'my-new-auth-token');
     const url = `${this.heroesUrl}/${hero.id}`; // PUT api/heroes/42
-    return this.http.put<User>(url, hero, httpOptions)
+    return this.http.put<User>(url, hero, this.httpOptions)
       .pipe(
         catchError(this.handleError('updateHero', hero))
       );
@@ -74,7 +87,7 @@ export class UsersService {
   /** DELETE: delete the hero from the server */
   deleteHero(id: number): Observable<{}> {
     const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
-    return this.http.delete(url, httpOptions)
+    return this.http.delete(url, this.httpOptions)
       .pipe(
         catchError(this.handleError('deleteHero'))
       );

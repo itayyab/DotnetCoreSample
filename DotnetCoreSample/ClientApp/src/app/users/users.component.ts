@@ -29,11 +29,15 @@ export class UsersComponent implements OnInit {
   }
   ngOnInit() {
     this.getHeroes();
+    
   }
 
   getHeroes(): void {
     this.heroesService.getHeroes()
-      .subscribe(heroes => (this.heroes = heroes));
+      .subscribe(heroes => {
+        this.heroes = heroes;
+        console.log(JSON.stringify(this.heroes));
+      });
   }
   open2() {
     this.edit = false;
