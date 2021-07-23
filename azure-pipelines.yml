@@ -16,7 +16,13 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
-
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'itayyab'
+    scannerMode: 'MSBuild'
+    projectKey: 'dotnetcoresample'
+    projectName: 'dotnetcoresample'
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
@@ -27,8 +33,8 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
+- task: DotNetCoreCLI@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+
+- task: SonarCloudAnalyze@1
