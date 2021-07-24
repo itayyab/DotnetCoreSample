@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { MessageService } from './message.service';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { UsersComponent } from './users/users.component';
@@ -19,7 +18,6 @@ import { UsersComponent } from './users/users.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
     UsersComponent
   ],
   imports: [
@@ -30,7 +28,6 @@ import { UsersComponent } from './users/users.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
   providers: [HttpErrorHandler,
