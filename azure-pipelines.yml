@@ -48,8 +48,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
-    custom: 'tool install'
-    arguments: '--global dotnet-sonarscanner'
+    custom: ''
+    arguments: 'tool install --global dotnet-sonarscanner'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
