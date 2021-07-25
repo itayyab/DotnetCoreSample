@@ -89,7 +89,8 @@ steps:
     
 - task: AzureRmWebAppDeployment@4
   inputs:
-    ConnectionType: 'PublishProfile'
-    PublishProfilePath: '$(System.DefaultWorkingDirectory)/DotnetCoreSample/Properties/PublishProfiles/DotnetCoreSample*.pubxml'
-    PublishProfilePassword: '$(AZUREPUBPASS)'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure for Students (fb359318-74d9-4c9d-924a-e40b68321da1)'
+    appType: 'webAppLinux'
+    WebAppName: 'DotnetCoreSample20210723150916'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
