@@ -15,16 +15,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: CmdLine@2
-  inputs:
-    script: |
-      @echo off
-      echo Setting JAVA_HOME
-      set JAVA_HOME=C:\Program Files\Java\jdk-11.0.11
-      echo setting PATH
-      set PATH=C:\Program Files\Java\jdk-11.0.11\bin;%PATH%
-      echo Display java version
-      java -version
 - task: NuGetToolInstaller@1
 # - task: SonarCloudPrepare@1
 #   inputs:
@@ -80,6 +70,29 @@ steps:
   inputs:
     filePath: './MoveCoverageFile.ps1'
     arguments: '-ExecutionPolicy Bypass'
+- task: CmdLine@2
+  inputs:
+    script: |
+      @echo off
+      echo Setting JAVA_HOME
+      set JAVA_HOME=C:\Program Files\Java\jdk-11.0.11
+      echo setting PATH
+      set PATH=C:\Program Files\Java\jdk-11.0.11\bin;%PATH%
+      echo Display java version
+      java -version    
+- task: CmdLine@2
+  inputs:
+    script: |
+      java -version          
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+- task: CmdLine@2
+  inputs:
+    script: |
+      java -version      
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
