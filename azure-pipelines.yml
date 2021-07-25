@@ -55,12 +55,12 @@ steps:
     command: 'custom'
     custom: 'sonarscanner'
     arguments: 'begin /o:"itayyab" /k:"dotnetcoresample_local" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="$(System.DefaultWorkingDirectory)\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="$(System.DefaultWorkingDirectory)\TestResults\*.opencover.xml"'
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
@@ -80,3 +80,8 @@ steps:
     command: 'custom'
     custom: 'sonarscanner'
     arguments: 'end /d:sonar.login="$(sonarlogin)"'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'WebApp'
+    publishLocation: 'Container'    
