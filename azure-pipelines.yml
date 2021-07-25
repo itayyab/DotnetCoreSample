@@ -81,11 +81,11 @@ steps:
     command: 'custom'
     custom: 'sonarscanner'
     arguments: 'end /d:sonar.login="$(sonarlogin)"'
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#     ArtifactName: 'WebApp'
-#     publishLocation: 'Container'    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'WebApp'
+    publishLocation: 'Container'    
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'PublishProfile'
