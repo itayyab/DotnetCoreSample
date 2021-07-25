@@ -183,7 +183,7 @@ namespace UnitTests
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
         [Fact, TestPriority(9)]
-        public async Task TestUserExists()
+        public void TestUserExists()
         {
 
 
