@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DotnetCoreSample;
 using DotnetCoreSample.Data;
 
-namespace DotnetCoreSampleA.Controllers
+namespace DotnetCoreSample.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -113,8 +113,7 @@ namespace DotnetCoreSampleA.Controllers
 
             return user;
         }
-
-        private bool UserExists(long id)
+        public bool UserExists(long id)
         {
             return _context.User.Any(e => e.id == id);
         }

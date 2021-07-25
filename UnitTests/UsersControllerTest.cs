@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using DotnetCoreSample.Controllers;
 
 namespace UnitTests
 {
@@ -20,11 +22,12 @@ namespace UnitTests
     {
         private readonly TestServer _server;
         private readonly HttpClient _client;
+        IConfigurationRoot configuration;
 
-        
+
         public UsersControllerTest()
          {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+             configuration = new ConfigurationBuilder()
            .SetBasePath(AppContext.BaseDirectory)
            .AddJsonFile("appsettings.json")
            .Build();
@@ -178,6 +181,35 @@ namespace UnitTests
             //var responseString = await response.Content.ReadAsStringAsync();
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+        [Fact, TestPriority(9)]
+        public async Task TestUserExists()
+        {
+
+
+
+            // Act
+             UsersController usersController = new UsersController(new DotnetCoreSampleContext(CreateOptions()));
+           // var response = await _client.DeleteAsync("/ErrorCheck");
+           
+            var result = usersController.UserExists(-1);
+            Assert.False(result);
+            //var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+           // Assert.Equal("Error", redirectToActionResult.ActionName);
+
+            //response.EnsureSuccessStatusCode();
+            //var responseString = await response.Content.ReadAsStringAsync();
+            // Assert
+          //  Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        private DbContextOptions<DotnetCoreSampleContext> CreateOptions()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<DotnetCoreSampleContext>();
+           
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("DotnetCoreSampleContextTest"));
+
+            return optionsBuilder.Options;
         }
     }
 }
