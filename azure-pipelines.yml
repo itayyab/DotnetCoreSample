@@ -72,7 +72,7 @@ steps:
 - task: PowerShell@2
   inputs:
     filePath: './CreateZip.ps1'
-    arguments: '-ExecutionPolicy Bypass -source "DotnetCoreSample\bin\Release\netcoreapp3.1\publish\*" -dest "$(build.artifactStagingDirectory)\WebApp.zip"'         
+    arguments: '-ExecutionPolicy Bypass -source "$(System.DefaultWorkingDirectory)\DotnetCoreSample\bin\Release\netcoreapp3.1\publish\*" -dest "$(build.artifactStagingDirectory)\WebApp.zip"'         
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
