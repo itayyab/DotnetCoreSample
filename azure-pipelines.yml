@@ -16,30 +16,31 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'SonarCloud'
-    organization: 'itayyab'
-    scannerMode: 'MSBuild'
-    projectKey: 'dotnetcoresample'
-    projectName: 'dotnetcoresample'
 # - task: SonarCloudPrepare@1
 #   inputs:
 #     SonarCloud: 'SonarCloud'
 #     organization: 'itayyab'
-#     scannerMode: 'CLI'
-#     configMode: 'manual'
-#     cliProjectKey: 'dotnetcoresample'
-#     cliProjectName: 'dotnetcoresample'
-#     cliSources: '.'
-#     extraProperties: |
-#       # Additional properties that will be passed to the scanner, 
-#       # Put one key=value per line, example:
-#       # sonar.exclusions=**/*.bin
-#       sonar.scm.enabled=true
-#       sonar.cs.vstest.reportsPaths="%CD%\TestResults\*.trx"
-#       sonar.cs.opencover.reportsPaths="%CD%\TestResults\*.opencover.xml"
+#     scannerMode: 'MSBuild'
+#     projectKey: 'dotnetcoresample'
 #     projectName: 'dotnetcoresample'
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'itayyab'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'dotnetcoresample'
+    cliProjectName: 'dotnetcoresample'
+    cliSources: '.'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner, 
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.exclusions="**/ClientApp/**" 
+      sonar.scm.enabled=true 
+      sonar.cs.vstest.reportsPaths="%CD%\TestResults\*.trx" 
+      sonar.cs.opencover.reportsPaths="%CD%\TestResults\*.opencover.xml" 
+    projectName: 'dotnetcoresample'
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
@@ -55,5 +56,8 @@ steps:
     command: 'custom'
     custom: 'test'
     arguments: '-r TestResults --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
-
+- task: PowerShell@2
+  inputs:
+    filePath: './MoveCoverageFile.ps1'
+    arguments: '-ExecutionPolicy Bypass'
 - task: SonarCloudAnalyze@1
