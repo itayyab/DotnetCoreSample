@@ -73,5 +73,5 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
-    custom: 'sonarscanner end'
-    arguments: '/d:sonar.login="$(sonarlogin)"'
+    custom: 'sonarscanner'
+    arguments: 'end /d:sonar.login="$(sonarlogin)"'
