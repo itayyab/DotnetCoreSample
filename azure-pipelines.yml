@@ -54,7 +54,7 @@ steps:
   inputs:
     command: 'custom'
     custom: 'sonarscanner'
-    arguments: 'begin /o:"itayyab" /k:"dotnetcoresample_local" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="%CD%\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="%CD%\TestResults\*.opencover.xml"'
+    arguments: 'begin /o:"itayyab" /k:"dotnetcoresample_local" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="\TestResults\*.opencover.xml"'
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -69,17 +69,7 @@ steps:
 - task: PowerShell@2
   inputs:
     filePath: './MoveCoverageFile.ps1'
-    arguments: '-ExecutionPolicy Bypass'
-- task: CmdLine@2
-  inputs:
-    script: |
-      @echo off
-      echo Setting JAVA_HOME
-      set JAVA_HOME=C:\Program Files\Java\jdk-11.0.11
-      echo setting PATH
-      set PATH=C:\Program Files\Java\jdk-11.0.11\bin;%PATH%
-      echo Display java version
-      java -version    
+    arguments: '-ExecutionPolicy Bypass'   
 - task: CmdLine@2
   inputs:
     script: |
@@ -89,10 +79,6 @@ steps:
     versionSpec: '11'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
-- task: CmdLine@2
-  inputs:
-    script: |
-      java -version      
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
