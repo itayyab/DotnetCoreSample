@@ -54,7 +54,7 @@ steps:
   inputs:
     command: 'custom'
     custom: 'sonarscanner'
-    arguments: 'begin /o:"itayyab" /k:"dotnetcoresample_local" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="$(System.DefaultWorkingDirectory)\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="$(System.DefaultWorkingDirectory)\TestResults\*.opencover.xml"'
+    arguments: 'begin /o:"itayyab" /k:"dotnetcoresample" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="$(System.DefaultWorkingDirectory)\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="$(System.DefaultWorkingDirectory)\TestResults\*.opencover.xml"'
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
