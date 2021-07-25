@@ -68,6 +68,11 @@ steps:
     publishWebProjects: true
     arguments: '-c Release /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip"'
     modifyOutputPath: false
+    
+- task: PowerShell@2
+  inputs:
+    filePath: './CreateZip.ps1'
+    arguments: '-ExecutionPolicy Bypass -source "DotnetCoreSample\bin\Release\netcoreapp3.1\publish\*" -dest "$(build.artifactStagingDirectory)\WebApp.zip"'         
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
