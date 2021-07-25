@@ -45,11 +45,11 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'custom'
-    custom: 'tool'
-    arguments: 'install --global dotnet-sonarscanner'
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'custom'
+#     custom: 'tool'
+#     arguments: 'install --global dotnet-sonarscanner'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
