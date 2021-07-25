@@ -48,13 +48,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
-    custom: ''
-    arguments: 'tool install --global dotnet-sonarscanner'
+    custom: 'tool'
+    arguments: 'install --global dotnet-sonarscanner'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
-    custom: 'sonarscanner begin'
-    arguments: '/o:"itayyab" /k:"dotnetcoresample_local" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="%CD%\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="%CD%\TestResults\*.opencover.xml"'
+    custom: 'sonarscanner'
+    arguments: 'begin /o:"itayyab" /k:"dotnetcoresample_local" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(sonarlogin)" /d:sonar.exclusions="**/ClientApp/**" /d:sonar.scm.enabled=true /d:sonar.cs.vstest.reportsPaths="%CD%\TestResults\*.trx" /d:sonar.cs.opencover.reportsPaths="%CD%\TestResults\*.opencover.xml"'
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
