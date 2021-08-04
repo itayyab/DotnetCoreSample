@@ -51,6 +51,12 @@ steps:
     command: 'restore'
     feedsToUse: 'select'
     vstsFeed: '85420c89-c7a2-4ee2-9461-7cac5057a8e9'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'dotnet tool install --global dotnet-sonarscanner'
+    errorActionPreference: 'continue'
+    ignoreLASTEXITCODE: true
 # - task: DotNetCoreCLI@2
 #   inputs:
 #     command: 'custom'
