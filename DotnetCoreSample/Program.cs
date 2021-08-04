@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DotnetCoreSample
 {
     [ExcludeFromCodeCoverage]
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
